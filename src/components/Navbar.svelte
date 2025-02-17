@@ -1,32 +1,72 @@
-<!-- <script>
+<script>
 // @ts-nocheck
 
-    import { loggedInUser, login, register, logout } from '$lib/auth';
+    import { account } from '$lib/appwrite';
+    import { goto } from '$app/navigation';
+    /**
+	 * @type {{ name: any; $id?: string; $createdAt?: string; $updatedAt?: string; password?: string | undefined; hash?: string | undefined; hashOptions?: object | undefined; registration?: string; status?: boolean; labels?: string[]; passwordUpdate?: string; email?: string; phone?: string; emailVerification?: boolean; phoneVerification?: boolean; mfa?: boolean; prefs?: import("appwrite").Models.Preferences; targets?: import("appwrite").Models.Target[]; accessedAt?: string; } | null}
+	 */
+     export let loggedInUser = null;
+    /**
+	 * @type {(arg0: { name: any; $id?: string; $createdAt?: string; $updatedAt?: string; password?: string | undefined; hash?: string | undefined; hashOptions?: object | undefined; registration?: string; status?: boolean; labels?: string[]; passwordUpdate?: string; email?: string; phone?: string; emailVerification?: boolean; phoneVerification?: boolean; mfa?: boolean; prefs?: import("appwrite").Models.Preferences; targets?: import("appwrite").Models.Target[]; accessedAt?: string; } | null) => void}
+	 */
+     export let setLoggedInUser;
+
+    async function logout() {
+        await account.deleteSession('current');
+        setLoggedInUser(null);
+        goto('/');
+    }
 
     /**
-	 * @param {{ preventDefault: () => void; submitter: { dataset: { type: any; }; }; target: { email: { value: any; }; password: { value: any; }; }; }} event
+	 * @param {{ preventDefault: () => void; target: HTMLFormElement | undefined; submitter: { dataset: { type: any; }; }; }} e
 	 */
-    async function submit(event) {
-        event.preventDefault();
-        const formType = event.submitter.dataset.type;
-        const email = event.target.email.value;
-        const password = event.target.password.value;
+    async function submit(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const type = e.submitter.dataset.type;
 
-        if (formType === 'login') {
-            await login(email, password);
-        } else if (formType === 'register') {
-            await register(email, password);
+        if (type === "login") {
+            await login(formData.get('email'), formData.get('password'));
+        } else if (type === "register") {
+            await register(formData.get('email'), formData.get('password'));
         }
+    }
+
+    /**
+	 * @param {FormDataEntryValue | null} email
+	 * @param {FormDataEntryValue | null} password
+	 */
+    async function login(email, password) {
+        try {
+            loggedInUser = await account.get();
+        } catch (error) {
+            if (email && password) {
+                await account.createEmailPasswordSession(email.toString(), password.toString());
+            }
+            loggedInUser = await account.get();
+        }
+        setLoggedInUser(loggedInUser);
+    }
+
+    /**
+	 * @param {FormDataEntryValue | null} email
+	 * @param {FormDataEntryValue | null} password
+	 */
+    async function register(email, password) {
+        // @ts-ignore
+        await account.create(ID.unique(), email, password);
+        await login(email, password);
     }
 </script>
 
 <nav class="bg-gray-800 p-4">
     <div class="container mx-auto flex justify-between items-center">
-        <h1 class="text-white text-2xl">Welcome to Cards</h1>
-        <div class="text-white flex items-center space-x-4">
+        <a href="/" class="text-white text-4xl mr-4 hover:underline">Home</a>
+        <div class="text-white">
             {#if loggedInUser}
-                <span>Logged in as {loggedInUser.name}</span>
-                <a href="/dashboard" class="hover:underline">Go to Dashboard</a>
+                <span class="mr-4">Logged in as {loggedInUser.email}</span>
+                <a href="/dashboard" class="mr-4 hover:underline">Go to Dashboard</a>
                 <button on:click={logout} class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Logout</button>
             {:else}
                 <form on:submit={submit} class="flex space-x-2">
@@ -38,4 +78,4 @@
             {/if}
         </div>
     </div>
-</nav> -->
+</nav>
