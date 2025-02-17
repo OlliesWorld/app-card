@@ -2,16 +2,15 @@
 // @ts-nocheck
 import { account } from '$lib/appwrite';
 import { goto } from '$app/navigation';
-import Navbar from '../components/Navbar.svelte';
 import ProjectCard from '../components/Card.svelte';
     /**
-	 * @type {{ name: any; $id?: string; $createdAt?: string; $updatedAt?: string; password?: string | undefined; hash?: string | undefined; hashOptions?: object | undefined; registration?: string; status?: boolean; labels?: string[]; passwordUpdate?: string; email?: string; phone?: string; emailVerification?: boolean; phoneVerification?: boolean; mfa?: boolean; prefs?: import("appwrite").Models.Preferences; targets?: import("appwrite").Models.Target[]; accessedAt?: string; } | null}
-	 */
-     export let loggedInUser = null;
+ * @type {{ name: any; $id?: string; $createdAt?: string; $updatedAt?: string; password?: string | undefined; hash?: string | undefined; hashOptions?: object | undefined; registration?: string; status?: boolean; labels?: string[]; passwordUpdate?: string; email?: string; phone?: string; emailVerification?: boolean; phoneVerification?: boolean; mfa?: boolean; prefs?: import("appwrite").Models.Preferences; targets?: import("appwrite").Models.Target[]; accessedAt?: string; } | null}
+ */
+    export let loggedInUser = null;
     /**
-	 * @type {(arg0: { name: any; $id?: string; $createdAt?: string; $updatedAt?: string; password?: string | undefined; hash?: string | undefined; hashOptions?: object | undefined; registration?: string; status?: boolean; labels?: string[]; passwordUpdate?: string; email?: string; phone?: string; emailVerification?: boolean; phoneVerification?: boolean; mfa?: boolean; prefs?: import("appwrite").Models.Preferences; targets?: import("appwrite").Models.Target[]; accessedAt?: string; } | null) => void}
-	 */
-     export let setLoggedInUser;
+ * @type {(arg0: { name: any; $id?: string; $createdAt?: string; $updatedAt?: string; password?: string | undefined; hash?: string | undefined; hashOptions?: object | undefined; registration?: string; status?: boolean; labels?: string[]; passwordUpdate?: string; email?: string; phone?: string; emailVerification?: boolean; phoneVerification?: boolean; mfa?: boolean; prefs?: import("appwrite").Models.Preferences; targets?: import("appwrite").Models.Target[]; accessedAt?: string; } | null) => void}
+ */
+    export let setLoggedInUser;
 
     async function logout() {
         await account.deleteSession('current');
@@ -20,8 +19,8 @@ import ProjectCard from '../components/Card.svelte';
     }
 
     /**
-	 * @param {{ preventDefault: () => void; target: HTMLFormElement | undefined; submitter: { dataset: { type: any; }; }; }} e
-	 */
+ * @param {{ preventDefault: () => void; target: HTMLFormElement | undefined; submitter: { dataset: { type: any; }; }; }} e
+ */
     async function submit(e) {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -35,9 +34,9 @@ import ProjectCard from '../components/Card.svelte';
     }
 
     /**
-	 * @param {FormDataEntryValue | null} email
-	 * @param {FormDataEntryValue | null} password
-	 */
+ * @param {FormDataEntryValue | null} email
+ * @param {FormDataEntryValue | null} password
+ */
     async function login(email, password) {
         try {
             loggedInUser = await account.get();
@@ -51,9 +50,9 @@ import ProjectCard from '../components/Card.svelte';
     }
 
     /**
-	 * @param {FormDataEntryValue | null} email
-	 * @param {FormDataEntryValue | null} password
-	 */
+ * @param {FormDataEntryValue | null} email
+ * @param {FormDataEntryValue | null} password
+ */
     async function register(email, password) {
         // @ts-ignore
         await account.create(ID.unique(), email, password);
@@ -79,7 +78,6 @@ import ProjectCard from '../components/Card.svelte';
     }
 </script>
 
-<Navbar {loggedInUser} {setLoggedInUser} />
 <div class="container mx-auto">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8 ">
     <ProjectCard project={data} />

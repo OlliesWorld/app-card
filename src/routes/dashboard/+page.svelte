@@ -3,7 +3,6 @@
     import { Client, Databases, type Models } from 'appwrite';
     import ProjectForm from '../../components/Form.svelte';
     import ProjectCard from '../../components/Card.svelte';
-    import Navbar from '../../components/Navbar.svelte';
     import { account } from '$lib/appwrite';
 
     let loggedInUser: Models.User<Models.Preferences> | null = null;
@@ -114,7 +113,6 @@
     }
 </script>
 
-<Navbar {loggedInUser} {setLoggedInUser} />
 <div class="max-w-7xl mx-auto p-6">
   <div class="mb-12">
     <h1 class="text-2xl font-bold mb-6">Add New Project</h1>
