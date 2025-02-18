@@ -1,7 +1,6 @@
-<!-- filepath: /Users/ronilockwood/Desktop/sites/app-card/src/routes/+layout.svelte -->
 <script lang="ts">
-  import '../app.css'; // Import your global CSS file
-  import Navbar from '../components/Navbar.svelte'; // Import your Navbar component
+  import '../app.css';
+  import Navbar from '../components/Navbar.svelte';
   import { onMount } from 'svelte';
   import { account } from '$lib/appwrite';
   import type { Models } from 'appwrite';
