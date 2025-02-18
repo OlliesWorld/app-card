@@ -60,22 +60,117 @@
     }
 </script>
 
-<nav class="bg-gray-800 p-4">
-    <div class="container mx-auto flex justify-between items-center">
-        <a href="/" class="text-white text-4xl mr-4 hover:underline">Home</a>
-        <div class="text-white">
+
+<nav class="navbar">
+    <div class="container">
+        <a href="/" class="home-link">Home</a>
+        <div class="auth-section">
             {#if loggedInUser}
-                <span class="mr-4">Logged in as {loggedInUser.email}</span>
-                <a href="/dashboard" class="mr-4 hover:underline">Go to Dashboard</a>
-                <button on:click={logout} class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Logout</button>
+                <span class="user-email">Logged in as {loggedInUser.email}</span>
+                <a href="/dashboard" class="dashboard-link">Go to Dashboard</a>
+                <button on:click={logout} class="logout-button">Logout</button>
             {:else}
-                <form on:submit={submit} class="flex space-x-2">
-                    <input type="email" placeholder="Email" name="email" required class="p-2 rounded" />
-                    <input type="password" placeholder="Password" name="password" required class="p-2 rounded" />
-                    <button type="submit" data-type="login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
-                    <button type="submit" data-type="register" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Register</button>
+                <form on:submit={submit} class="auth-form">
+                    <input type="email" placeholder="Email" name="email" required class="form-input" />
+                    <input type="password" placeholder="Password" name="password" required class="form-input" />
+                    <button type="submit" data-type="login" class="login-button">Login</button>
+                    <button type="submit" data-type="register" class="register-button">Register</button>
                 </form>
             {/if}
         </div>
     </div>
 </nav>
+<style>
+    .navbar {
+        background-color: #1f2937;
+        padding: 1rem;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .home-link {
+        color: white;
+        font-size: 2.25rem;
+        margin-right: 1rem;
+        text-decoration: none;
+    }
+
+    .home-link:hover {
+        text-decoration: underline;
+    }
+
+    .auth-section {
+        color: white;
+    }
+
+    .user-email {
+        margin-right: 1rem;
+    }
+
+    .dashboard-link {
+        color: white;
+        margin-right: 1rem;
+        text-decoration: none;
+    }
+
+    .dashboard-link:hover {
+        text-decoration: underline;
+    }
+    .auth-form {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .form-input {
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        border: none;
+    }
+
+    .logout-button {
+        background-color: #ef4444;
+        color: white;
+        font-weight: 700;
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        border: none;
+        cursor: pointer;
+    }
+
+    .logout-button:hover {
+        background-color: #dc2626;
+    }
+
+    .login-button {
+        background-color: #3b82f6;
+        color: white;
+        font-weight: 700;
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        border: none;
+        cursor: pointer;
+    }
+
+    .login-button:hover {
+        background-color: #2563eb;
+    }
+    .register-button {
+        background-color: #22c55e;
+        color: white;
+        font-weight: 700;
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        border: none;
+        cursor: pointer;
+    }
+
+    .register-button:hover {
+        background-color: #16a34a;
+    }
+</style>

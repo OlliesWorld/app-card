@@ -1,4 +1,9 @@
-@import 'tailwindcss';
-
-/* @plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography'; */
+/* @import 'tailwindcss'; */
+body {
+    margin: 0;
+}
+.container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}

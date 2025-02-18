@@ -79,9 +79,22 @@ import ProjectCard from '../components/Card.svelte';
 </script>
 
 <div class="container mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8 ">
+    <div class="grid mt-8 ">
     <ProjectCard project={data} />
     <ProjectCard project={data2} />
     <ProjectCard project={data3} />
 </div>  
 </div>
+<style>
+    .mx-auto {
+        margin: 0 auto;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1rem;
+    }
+    .mt-8 {
+        margin-top: 2rem;
+    }
+</style>
